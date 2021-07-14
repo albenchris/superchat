@@ -61,9 +61,25 @@ function SignOut() {
 }
 
 function ChatRoom() {
+
+  const messageRef = firestore.collection('messages');
+  const query = messageRef.orderBy('createdAt').limit(25);
+
+  const [messages] = useCollectionData(query, { idField: 'id' });
+
   return (
-    <div></div>
+    <>
+      <div>
+        {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+      </div>
+    </>
   );
+}
+
+function ChatMessage({ message }) {
+  const { text, uid } = message;
+
+  return <p>{text}</p>
 }
 
 export default App;
