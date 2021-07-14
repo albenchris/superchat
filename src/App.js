@@ -44,8 +44,13 @@ function App() {
 }
 
 function SignIn() {
+  const signInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);
+  };
+
   return (
-    <div></div>
+    <button onClick={signInWithGoogle}>Sign in with Google</button>
   );
 }
 
