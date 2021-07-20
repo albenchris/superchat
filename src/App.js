@@ -22,7 +22,6 @@ firebase.initializeApp({
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
-const analytics = firebase.analytics();
 
 // ===================================================================================
 
@@ -33,7 +32,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        
+        <h1>⚛️🔥💬</h1>
+        <SignOut />
       </header>
 
       <section>
