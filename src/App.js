@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 
 // FIREBASE
@@ -50,18 +50,18 @@ function SignIn() {
   };
 
   return (
-    <button onClick={signInWithGoogle}>Sign in with Google</button>
+    <button className="sign-in" onClick={signInWithGoogle}>Sign in with Google</button>
   );
 }
 
 function SignOut() {
   return auth.currentUser && (
-    <button onClick={() => auth.signOut()}>Sign Out</button>
+    <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
   );
 }
 
 function ChatRoom() {
-
+  const dummy = useRef();
   const messagesRef = firestore.collection('messages');
   const query = messagesRef.orderBy('createdAt').limit(25);
 
@@ -71,8 +71,6 @@ function ChatRoom() {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-
-    await console.log('sendMessage says, "hello!"');
 
     const { uid, photoURL } = auth.currentUser;
 
@@ -84,12 +82,16 @@ function ChatRoom() {
     });
 
     setFormValue('');
+    // this will scroll new message into view with the useRef React hook
+    dummy.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <>
       <div>
         {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+
+        <div ref={dummy}></div>
       </div>
 
       <form onSubmit={sendMessage}>
